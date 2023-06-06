@@ -1,0 +1,10 @@
+veggie:5
+chicken:2
+mustard:7
+pickles:2
+buns:-2
+tomato:5
+lettuce:4
+patties:0
+cheese:8
+ketchup:6
