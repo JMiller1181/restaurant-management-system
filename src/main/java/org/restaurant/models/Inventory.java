@@ -4,46 +4,43 @@ package org.restaurant.models;
 import java.io.*;
 import java.util.*;
 
-class Main {
-    public static void main(String[] args) {
+public class Inventory {
+    private HashMap<String, Integer> ingredients;
 
-        // Read inventory from file
-        Inventory inventory = readInventoryFromFile("inventory.txt");
+    public Inventory() {
+        ingredients = new HashMap<>();
+    }
 
-        // Print current inventory
-        System.out.println("Current inventory:");
-        System.out.println(inventory);
-
-
-        // Check the amount of each ingredient and warn if it is less than 5.
-        for (String ingredient : inventory.ingredients.keySet()) {
-            int amount = inventory.getInventory(ingredient);
-            if (amount <= 3) {
-                // Print a warning message in red.
-                printWarning(ingredient, amount);
-            }
+    //Add ingredients
+    public void addIngredient(String ingredient, int amount) {
+        if (!ingredients.containsKey(ingredient)) {
+            ingredients.put(ingredient, amount);
+        } else {
+            ingredients.put(ingredient, ingredients.get(ingredient) + amount);
         }
+    }
 
-        // Sample order
-        List<String> orderedIngredients = Arrays.asList("buns", "patties",  "chicken", "veggie", "buns", "ketchup","pickles");
-        processOrder(inventory, orderedIngredients);
+    //Get amount of ingredients in inventory
+    public int getInventory(String ingredient) {
+        if (ingredients.containsKey(ingredient)) {
+            return ingredients.get(ingredient);
+        } else {
+            return 0;
+        }
+    }
 
-        // Print inventory after order
-        System.out.println("\nInventory after order:");
-        System.out.println(inventory);
+    //Update amount of ingredients in inventory
+    public void updateInventory(String ingredient, int amount) {
+        if (ingredients.containsKey(ingredient)) {
+            ingredients.put(ingredient, amount);
+        }
+    }
 
-        // Update inventory
-       // inventory.updateInventory("buns", 12);
-        //inventory.updateInventory("patties", 0);
-       // inventory.updateInventory("chicken", 3);
-       // inventory.updateInventory("veggie", 9);
-
-        // Print updated inventory
-        System.out.println("\nUpdated inventory:");
-        System.out.println(inventory);
-
-        // Write inventory to file
-        writeInventoryToFile(inventory, "inventory.txt");
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "ingredients=" + ingredients +
+                '}';
     }
 
     //Read Inventory from file
@@ -81,6 +78,7 @@ class Main {
             System.out.println("Error writing inventory file: " + e.getMessage());
         }
     }
+
     //Print low inventory WARNING
     private static void printWarning(String ingredient, int amount) {
         System.out.println("\u001B[31mWARNING\u001B[0m : Low Inventory for " + ingredient + ". Only " + amount + " left!");
@@ -93,46 +91,48 @@ class Main {
         }
     }
 
-    public static class Inventory {
-        private HashMap<String, Integer> ingredients;
+    public static void main(String[] args) {
+        // Read inventory from file
+        Inventory inventory = readInventoryFromFile("src/main/java/org/restaurant/utils/inventory.txt");
 
-        public Inventory() {
-            ingredients = new HashMap<>();
-        }
+        // Print current inventory
+        System.out.println("Current inventory:");
+        System.out.println(inventory);
 
-        //Add ingredients
-        public void addIngredient(String ingredient, int amount) {
-            if (!ingredients.containsKey(ingredient)) {
-                ingredients.put(ingredient, amount);
-            } else {
-                ingredients.put(ingredient, ingredients.get(ingredient) + amount);
+
+        // Check the amount of each ingredient and warn if it is less than 5.
+        for (String ingredient : inventory.ingredients.keySet()) {
+            int amount = inventory.getInventory(ingredient);
+            if (amount <= 3) {
+                // Print a warning message in red.
+                printWarning(ingredient, amount);
             }
         }
 
-        //Get amount of ingredients in inventory
-        public int getInventory(String ingredient) {
-            if (ingredients.containsKey(ingredient)) {
-                return ingredients.get(ingredient);
-            } else {
-                return 0;
-            }
-        }
+        // Sample order
+        List<String> orderedIngredients = Arrays.asList("buns", "patties", "chicken", "veggie", "buns", "ketchup", "pickles");
+        processOrder(inventory, orderedIngredients);
 
-        //Update amount of ingredients in inventory
-        public void updateInventory(String ingredient, int amount) {
-            if (ingredients.containsKey(ingredient)) {
-                ingredients.put(ingredient,amount);
-            }
-        }
+        // Print inventory after order
+        System.out.println("\nInventory after order:");
+        System.out.println(inventory);
 
-        @Override
-        public String toString() {
-            return "Inventory{" +
-                    "ingredients=" + ingredients +
-                    '}';
-        }
+        // Update inventory
+        // inventory.updateInventory("buns", 12);
+        //inventory.updateInventory("patties", 0);
+        // inventory.updateInventory("chicken", 3);
+        // inventory.updateInventory("veggie", 9);
+
+        // Print updated inventory
+        System.out.println("\nUpdated inventory:");
+        System.out.println(inventory);
+
+        // Write inventory to file
+        writeInventoryToFile(inventory, "src/main/java/org/restaurant/utils/inventory.txt");
     }
 }
+
+
 
 
 
