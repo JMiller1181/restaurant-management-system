@@ -1,5 +1,6 @@
 package org.restaurant.models;
 
+
 import java.util.Scanner;
 public class Table {
 
