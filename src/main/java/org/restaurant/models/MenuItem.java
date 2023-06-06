@@ -36,6 +36,10 @@ public class MenuItem implements Serializable {
         return price;
     }
 
+    /**
+     * Adds an ingredient to the ingredientList
+     * @param ingredient string of ingredient to be added
+     */
     public void addIngredientToList(String ingredient) {
         this.ingredientList.add(ingredient);
 

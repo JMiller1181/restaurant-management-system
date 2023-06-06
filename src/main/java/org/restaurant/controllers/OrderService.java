@@ -14,33 +14,67 @@ public class OrderService {
         this.orderList = new ArrayList<>();
         this.totalOrders = 0;
     }
+
+    /**
+     * Sets order status to complete
+     * @param order the order to have its status changed
+     */
     public void completeOrder(Order order){
         order.setOrderStatus(Order.OrderStatus.COMPLETED);
         order.setLastHandled();
 
     }
+
+    /**
+     * Adds an order to the order list and sets its ID
+     * @param order the order to be added to the list of orders
+     */
     public void addOrder(Order order){
         orderList.add(order);
         totalOrders = orderList.size();
         order.setOrderID(totalOrders);
     }
 
+    /**
+     * Creates a new order and adds it to the order list
+     */
     public void createNewOrder(){
         Order order = new Order();
         addOrder(order);
         System.out.println("Your order number is: " + order.getOrderID());
     }
 
+    /**
+     * Sets the order status to preparing
+     * @param order the order to have its status changed
+     */
     public void prepareOrder(Order order){
         order.setOrderStatus(Order.OrderStatus.PREPARING);
         order.setLastHandled();
     }
+
+    /**
+     *
+     * @return the list of total orders
+     */
     public List<Order> getOrderList() {
         return orderList;
     }
+
+    /**
+     * Finds the order by the order ID
+     * @param orderID the order ID
+     * @return the order with the matching ID
+     */
     public Order findOrder(int orderID){
         return orderList.get(orderID - 1);
     }
+
+    /**
+     * Searches for all orders that have the matching status and returns a string of those orders
+     * @param status the status to search by
+     * @return a string of all matching orders
+     */
     public String findOrderByStatus(Order.OrderStatus status){
         String foundOrders = "";
         for (Order order: orderList){
