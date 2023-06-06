@@ -56,10 +56,10 @@ public class UserService {
         employee.add("Emily(STAFF)");
         employee.add("Jacob(MANAGER)");
         // Hash the password before storing
-        password.add(passwordHasher.hash("jav123"));
-        password.add(passwordHasher.hash("dar123"));
-        password.add(passwordHasher.hash("emi123"));
-        password.add(passwordHasher.hash("jac123"));
+        password.add(PasswordHasher.hash("jav123"));
+        password.add(PasswordHasher.hash("dar123"));
+        password.add(PasswordHasher.hash("emi123"));
+        password.add(PasswordHasher.hash("jac123"));
 
         // Create a Scanner object for input
         Scanner scanner = new Scanner(System.in);
