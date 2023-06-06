@@ -1,2 +1,4 @@
-package org.restaurant.models;public class Table {
+package org.restaurant.models;
+
+public class Table {
 }
