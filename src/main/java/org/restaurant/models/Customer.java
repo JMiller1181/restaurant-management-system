@@ -1,2 +1,4 @@
-package org.restaurant.models;public class Customer {
+package org.restaurant.models;
+
+public class Customer {
 }
