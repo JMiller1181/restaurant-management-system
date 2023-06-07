@@ -38,6 +38,7 @@ public class Inventory {
     }
 
 
+
     @Override
     public String toString() {
         return "Inventory{" +
@@ -83,6 +84,7 @@ public class Inventory {
 
     // Print low inventory WARNING
     private void printWarning(String ingredient, int amount) {
+
         System.out.println("\u001B[31mWARNING\u001B[0m : Low Inventory for " + ingredient + ". Only " + amount + " left!");
     }
 
@@ -152,12 +154,14 @@ public class Inventory {
         System.out.println("Current inventory:");
         System.out.println(inventory);
 
+
         // Check the amount of each ingredient and warn if it is less than 5.
         for (String ingredient : inventory.ingredients.keySet()) {
             int amount = inventory.getInventory(ingredient);
             if (amount <= 3) {
                 // Print a warning message in red.
                 inventory.printWarning(ingredient, amount);
+
             }
         }
 
