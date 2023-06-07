@@ -10,6 +10,7 @@ public class MenuItem implements Serializable {
     private String description;
     private int prepTime;
     private double price;
+    private int itemID;
     private List<String> ingredientList;
 
     public MenuItem(String name, String description, int prepTime, double price, List<String> ingredientList){
@@ -18,6 +19,7 @@ public class MenuItem implements Serializable {
         this.prepTime = prepTime;
         this.price = price;
         this.ingredientList = ingredientList;
+        this.itemID = 0;
     }
 
     public MenuItem(String name, String description, int prepTime, double price){
@@ -26,6 +28,12 @@ public class MenuItem implements Serializable {
         this.prepTime = prepTime;
         this.price = price;
         this.ingredientList = new ArrayList<>();
+        this.itemID = 0;
+
+    }
+
+    public void setItemID(int itemID) {
+        this.itemID = itemID;
     }
 
     public String getName() {
@@ -45,9 +53,14 @@ public class MenuItem implements Serializable {
 
     }
 
+    public int getItemID() {
+        return itemID;
+    }
+
     @Override
     public String toString() {
-        return "Name: " + name + "\n" +
+        return "\nName: " + name + "\n" +
+                "Item ID: " + itemID + "\n" +
                 "Description: " + description + "\n" +
                 "Price: " + price + "\n" +
                 "Ingredients: " + ingredientList;

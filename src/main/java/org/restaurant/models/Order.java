@@ -1,10 +1,9 @@
 package org.restaurant.models;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Order {
     private double totalPrice;
@@ -12,7 +11,7 @@ public class Order {
     private List<MenuItem> itemsOrdered;
     private OrderStatus orderStatus;
     private HashMap<String, Integer> quantityOrdered;
-    private Date lastHandled;
+    private LocalDateTime lastHandled;
     private int orderTableID;
     public enum OrderStatus{
         WAITING, PREPARING, COMPLETED
@@ -24,8 +23,8 @@ public class Order {
         this.orderStatus = OrderStatus.WAITING;
         this.itemsOrdered = new ArrayList<>();
         this.quantityOrdered = new HashMap<>();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        this.lastHandled = new Date();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        this.lastHandled = LocalDateTime.now();
         formatter.format(lastHandled);
         this.orderTableID = 0;
     }
@@ -50,8 +49,8 @@ public class Order {
      * updates the time on the order
      */
     public void setLastHandled() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        this.lastHandled = new Date();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        this.lastHandled = LocalDateTime.now();
         formatter.format(lastHandled);
 
     }
@@ -133,6 +132,7 @@ public class Order {
      * @return the total price of the order
      */
     public double getTotalPrice() {
+        totalPrice = 0;
         setTotalPrice();
         return totalPrice;
     }
