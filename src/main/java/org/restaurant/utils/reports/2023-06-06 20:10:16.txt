@@ -1,0 +1,29 @@
+-----------------------------
+ Daily Sales Report 
+ 2023-06-06 20:10:16
+-----------------------------
+Total Revenue: $
+
+Most Popular Items: 
+1. 
+2. 
+3. 
+
+Tables Sales: 
+1. 
+2. 
+3. 
+
+Detailed Orders: 
+Items: 
+   - 
+   - 
+
+Total: 
+
+Order ID: 
+Table ID: 
+Items: 
+   - 
+   - 
+Total: 
