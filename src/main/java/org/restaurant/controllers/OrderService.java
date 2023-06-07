@@ -35,6 +35,14 @@ public class OrderService {
         order.setOrderID(totalOrders);
     }
 
+    public void removeItemFromOrder(Order order, int itemID){
+        List<MenuItem> itemsOrdered = order.getItemsOrderedList();
+        for (MenuItem item: itemsOrdered){
+            if(item.getItemID() == itemID){
+                itemsOrdered.remove(item);
+            }
+        }
+    }
     /**
      * Creates a new order and adds it to the order list
      */
@@ -88,29 +96,60 @@ public class OrderService {
         return totalOrders;
     }
 
-    public static void main(String[] args){
-        OrderService orderService = new OrderService();
-        MenuItemService menuItemService = new MenuItemService();
-        menuItemService.setMenuList();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("What would you like to order?");
-        String item = scanner.nextLine();
-        orderService.createNewOrder();
-        orderService.findOrder(1).addItemsOrdered(menuItemService.findMenuItem(item));
-        System.out.println("Here is your current order");
-        System.out.println(orderService.findOrder(1));
-        orderService.prepareOrder(orderService.findOrder(1));
-        System.out.println(orderService.findOrder(1));
-        System.out.println(orderService.findOrder(1).getOrderedItems());
-        orderService.completeOrder(orderService.findOrder(1));
-        System.out.println("Search for orders by status");
-        String statusString = scanner.nextLine();
-        if(statusString.equalsIgnoreCase("complete")){
-            System.out.println(orderService.findOrderByStatus(Order.OrderStatus.COMPLETED));
-        } else if (statusString.equalsIgnoreCase("waiting")) {
-            System.out.println(orderService.findOrderByStatus(Order.OrderStatus.WAITING));
-        } else if (statusString.equalsIgnoreCase("preparing")) {
-            System.out.println(orderService.findOrderByStatus(Order.OrderStatus.PREPARING));
+    public void orderServiceSwitch(Scanner scanner, OrderService orderService){
+        System.out.println("""
+    What would you like to do?
+    1) Take an order
+    2) Find an order
+    3) Change an order
+    4) Exit""");
+        int option = scanner.nextInt();
+        scanner.nextLine();
+        switch (option){
+            case 1:
+                orderService.createNewOrder();
+                break;
+            case 2:
+                System.out.println("""
+                        How would you like to search?
+                        1) By order status
+                        2) By order ID
+                        3) Go back""");
+                break;
+            case 3:
+                System.out.println("""
+                        What would you like to change?
+                        1) Order status
+                        2) Items ordered
+                        3) Go back""");
+                break;
+            case 4:
+                break;
         }
+    }
+    public static void main(String[] args) {
+//        OrderService orderService = new OrderService();
+//        MenuItemService menuItemService = new MenuItemService();
+////        menuItemService.setMenuList();
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("What would you like to order?");
+//        int item = scanner.nextInt();
+//        orderService.createNewOrder();
+//        orderService.findOrder(1).addItemsOrdered(menuItemService.findMenuItem(item));
+//        System.out.println("Here is your current order");
+//        System.out.println(orderService.findOrder(1));
+//        orderService.prepareOrder(orderService.findOrder(1));
+//        System.out.println(orderService.findOrder(1));
+//        System.out.println(orderService.findOrder(1).getOrderedItems());
+//        orderService.completeOrder(orderService.findOrder(1));
+//        System.out.println("Search for orders by status");
+//        String statusString = scanner.nextLine();
+//        if(statusString.equalsIgnoreCase("complete")){
+//            System.out.println(orderService.findOrderByStatus(Order.OrderStatus.COMPLETED));
+//        } else if (statusString.equalsIgnoreCase("waiting")) {
+//            System.out.println(orderService.findOrderByStatus(Order.OrderStatus.WAITING));
+//        } else if (statusString.equalsIgnoreCase("preparing")) {
+//            System.out.println(orderService.findOrderByStatus(Order.OrderStatus.PREPARING));
+//        }
     }
 }
