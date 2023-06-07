@@ -25,7 +25,7 @@ class Main {
         }
 
         // Sample order
-        List<String> orderedIngredients = Arrays.asList("buns", "patties",  "chicken", "veggie", "buns", "ketchup","pickles");
+        List<String> orderedIngredients = Arrays.asList("buns", "patties", "chicken", "veggie", "buns", "ketchup", "pickles");
         processOrder(inventory, orderedIngredients);
 
         // Print inventory after order
@@ -33,10 +33,10 @@ class Main {
         System.out.println(inventory);
 
         // Update inventory
-       // inventory.updateInventory("buns", 12);
+        // inventory.updateInventory("buns", 12);
         //inventory.updateInventory("patties", 0);
-       // inventory.updateInventory("chicken", 3);
-       // inventory.updateInventory("veggie", 9);
+        // inventory.updateInventory("chicken", 3);
+        // inventory.updateInventory("veggie", 9);
 
         // Print updated inventory
         System.out.println("\nUpdated inventory:");
@@ -81,6 +81,7 @@ class Main {
             System.out.println("Error writing inventory file: " + e.getMessage());
         }
     }
+
     //Print low inventory WARNING
     private static void printWarning(String ingredient, int amount) {
         System.out.println("\u001B[31mWARNING\u001B[0m : Low Inventory for " + ingredient + ". Only " + amount + " left!");
@@ -121,7 +122,7 @@ class Main {
         //Update amount of ingredients in inventory
         public void updateInventory(String ingredient, int amount) {
             if (ingredients.containsKey(ingredient)) {
-                ingredients.put(ingredient,amount);
+                ingredients.put(ingredient, amount);
             }
         }
 
