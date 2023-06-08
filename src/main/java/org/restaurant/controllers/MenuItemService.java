@@ -15,9 +15,35 @@ public class MenuItemService {
         this.menuList = new ArrayList<>();
     }
 
+    public MenuItem createNewMenuItem(){
+        Scanner scanner = new Scanner(System.in);
+        List<String> ingredientList = new ArrayList<>();
+        System.out.println("What is the name of the item?");
+        String name = scanner.nextLine();
+        System.out.println("What is the item description");
+        String desc = scanner.nextLine();
+        System.out.println("How long does it take to prepare?");
+        int prep = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("What is the price?");
+        double price = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.println("What ingredients does it take?");
+        while(true){
+            String ingredient = scanner.nextLine();
+            if(ingredient == ""){
+                break;
+            } else {
+                ingredientList.add(ingredient);
+            }
+        }
+        MenuItem newItem = new MenuItem(name,desc,prep,price,ingredientList);
+        return newItem;
+    }
     public void addMenuItem(MenuItem item) {
         menuList.add(item);
-        item.setItemID(menuList.size());
+        item.setItemID(menuList.indexOf(item) + 1);
+        updateMenu(menuList);
     }
 
     public String printMenu() {
@@ -25,7 +51,7 @@ public class MenuItemService {
         for (MenuItem item : menuList) {
             itemOptions += item.getItemID() + ") " + item.getName() + "\n";
         }
-        itemOptions += "Press any other key to exit";
+        itemOptions += "Select any other number to complete your order.";
         return itemOptions;
     }
 
@@ -33,12 +59,12 @@ public class MenuItemService {
         return menuList;
     }
 
-    public void setMenuList(List<MenuItem> itemList) {
-//        if (readMenu() == null) {
-//            this.menuList = new ArrayList<>();
-//        } else {
-//            this.menuList = readMenu();
-//        }
+    public void setMenuList() {
+        if (readMenu() == null) {
+            this.menuList = new ArrayList<>();
+        } else {
+            this.menuList = readMenu();
+        }
     }
 
     public MenuItem findMenuItem(int IDNumber) {
@@ -47,13 +73,14 @@ public class MenuItemService {
                 return item;
             }
         }
-        System.out.println("No such item on the menu.");
+        System.out.println("Order complete.");
         return null;
     }
 
     public void removeMenuItem(MenuItem item) {
         if (item != null) {
             menuList.remove(item);
+            updateMenu(menuList);
         } else {
             System.out.println("Cannot remove non-existent item from menu.");
         }
@@ -66,72 +93,96 @@ public class MenuItemService {
                 FileWriter writer = new FileWriter(menuFile);
                 for(MenuItem item: menuList){
                     System.out.println(item.getName()+","+item.getItemID());
-                    writer.write("name:"+item.getName()+",description:"+item.getDescription()
-                    +",prepTime:"+item.getPrepTime()+",price:"+item.getPrice()+",itemID:"+item.getItemID()+
-                            ",ingredients:"+item.getIngredientList());
-                    writer.close();
+                    writer.write(item.getName()+","+item.getDescription()
+                    +","+item.getPrepTime()+","+item.getPrice()+","+item.getItemID()+
+                            ","+item.getIngredientList()+"\n");
                 }
+                writer.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public List<String> readMenu() {
+    public List<MenuItem> readMenu() {
         List<String> menuItems = new ArrayList<>();
+        String name = "";
+        String desc = "";
+        int prep = 0;
+        double price = 0;
+        int itemID = 0;
+
         try {
             File menuFile = new File("src/main/java/org/restaurant/utils/foodMenu.txt");
             if (menuFile.exists()) {
-                if (menuList.isEmpty()) {
-                    System.out.println("Menu is empty, please add items to the menu.");
-                    return null;
-                } else {
                     Scanner scanner = new Scanner(menuFile);
                     while (scanner.hasNextLine()) {
+                        System.out.println("Running");
                         String item = scanner.nextLine();
                         String[] variables = item.split(",");
-                        for (String var : variables) {
-                            String[] parts = var.split(":");
-                            String property = parts[0];
-                            switch (property) {
-                                case "name":
-                                    String name = parts[1];
+                        List<String> ingredients = new ArrayList<>();
+                        for (int i = 0; i < variables.length; i++) {
+                            switch (i) {
+                                case 0:
+                                    name = variables[i];
                                     break;
-                                case "description":
-                                    String desc = parts[1];
+                                case 1:
+                                    desc = variables[i];
                                     break;
-                                case "prepTime":
-                                    int prep = Integer.parseInt(parts[1]);
+                                case 2:
+                                    prep = Integer.parseInt(variables[i]);
                                     break;
-                                case "price":
-                                    double price = Double.parseDouble(parts[1]);
+                                case 3:
+                                    price = Double.parseDouble(variables[i]);
                                     break;
-                                case "itemID":
-                                    int itemID = Integer.parseInt(parts[1]);
+                                case 4:
+                                    itemID = Integer.parseInt(variables[i]);
                                     break;
-                                case "ingredients":
+                                default:
+                                    ingredients.add(variables[i]);
+                                    break;
                             }
                         }
+                        MenuItem menuItem = new MenuItem(name,desc,prep,price,ingredients);
+                        addMenuItem(menuItem);
                     }
                 }
-            }
-            return menuItems;
+            return menuList;
         } catch (Exception e) {
             System.out.println("Menu is empty, please add items to the menu.");
             return null;
         }
     }
-        ////////////////////////
+
+    public void changeMenuSwitch(Scanner scanner, MenuItemService menuItemService){
+        System.out.println("""
+                \n----- CHANGE MENU -----
+                What would you like to do?
+                1) Add an item
+                2) Remove an item
+                3) Exit\n""");
+        int option = scanner.nextInt();
+        scanner.nextLine();
+        switch (option){
+            case 1:
+                addMenuItem(createNewMenuItem());
+                break;
+            case 2:
+                System.out.println("Which item would you like to remove?");
+                System.out.println(printMenu());
+                int removeID = scanner.nextInt();
+                scanner.nextLine();
+                removeMenuItem(findMenuItem(removeID));
+                break;
+            default:
+                break;
+        }
+    }
     public static void main(String[] args){
         MenuItemService menuItemService = new MenuItemService();
-        List<String> ingredients = new ArrayList<>();
-        ingredients.add("buns");
-        ingredients.add("patties");
-        MenuItem item = new MenuItem("item1", "the first item", 2, 2, ingredients);
-        List<MenuItem> menu = new ArrayList<>();
-        menu.add(item);
-        menuItemService.setMenuList(menu);
-        menuItemService.updateMenu(menu);
+        menuItemService.setMenuList();
+//        menuItemService.updateMenu(menuItemService.getMenuList());
+        System.out.println(menuItemService.printMenu());
 //        Scanner scanner = new Scanner(System.in);
 //        menuItemService.setMenuList();
 //        System.out.println(menuItemService.getMenuList());
