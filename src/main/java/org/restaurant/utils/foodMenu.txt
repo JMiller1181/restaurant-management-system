@@ -1,2 +1,2 @@
-item1,the first item,2,2.0,2,[buns, patties]
-item2,the second item,4,4.0,4,[buns, patties, lettuce]
+item1,the first item,2,2.0,1,buns,patties
+item2,the second item,4,4.0,2,buns,patties,lettuce
