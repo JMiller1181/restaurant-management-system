@@ -10,16 +10,18 @@ import java.util.Scanner;
 public class OrderService {
     private List<Order> orderList;
     private int totalOrders;
-    public OrderService(){
+
+    public OrderService() {
         this.orderList = new ArrayList<>();
         this.totalOrders = 0;
     }
 
     /**
      * Sets order status to complete
+     *
      * @param order the order to have its status changed
      */
-    public void completeOrder(Order order){
+    public void completeOrder(Order order) {
         order.setOrderStatus(Order.OrderStatus.COMPLETED);
         order.setLastHandled();
 
@@ -27,26 +29,28 @@ public class OrderService {
 
     /**
      * Adds an order to the order list and sets its ID
+     *
      * @param order the order to be added to the list of orders
      */
-    public void addOrder(Order order){
+    public void addOrder(Order order) {
         orderList.add(order);
         totalOrders = orderList.size();
         order.setOrderID(totalOrders);
     }
 
-    public void removeItemFromOrder(Order order, int itemID){
+    public void removeItemFromOrder(Order order, int itemID) {
         List<MenuItem> itemsOrdered = order.getItemsOrderedList();
-        for (MenuItem item: itemsOrdered){
-            if(item.getItemID() == itemID){
+        for (MenuItem item : itemsOrdered) {
+            if (item.getItemID() == itemID) {
                 itemsOrdered.remove(item);
             }
         }
     }
+
     /**
      * Creates a new order and adds it to the order list
      */
-    public void createNewOrder(){
+    public void createNewOrder() {
         Order order = new Order();
         addOrder(order);
         System.out.println("Your order number is: " + order.getOrderID());
@@ -54,15 +58,15 @@ public class OrderService {
 
     /**
      * Sets the order status to preparing
+     *
      * @param order the order to have its status changed
      */
-    public void prepareOrder(Order order){
+    public void prepareOrder(Order order) {
         order.setOrderStatus(Order.OrderStatus.PREPARING);
         order.setLastHandled();
     }
 
     /**
-     *
      * @return the list of total orders
      */
     public List<Order> getOrderList() {
@@ -71,41 +75,45 @@ public class OrderService {
 
     /**
      * Finds the order by the order ID
+     *
      * @param orderID the order ID
      * @return the order with the matching ID
      */
-    public Order findOrder(int orderID){
+    public Order findOrder(int orderID) {
         return orderList.get(orderID - 1);
     }
 
     /**
      * Searches for all orders that have the matching status and returns a string of those orders
+     *
      * @param status the status to search by
      * @return a string of all matching orders
      */
-    public String findOrderByStatus(Order.OrderStatus status){
+    public String findOrderByStatus(Order.OrderStatus status) {
         String foundOrders = "";
-        for (Order order: orderList){
-            if(order.getOrderStatus() == status){
+        for (Order order : orderList) {
+            if (order.getOrderStatus() == status) {
                 foundOrders += order + "\n";
             }
         }
         return foundOrders;
     }
+
     public int getTotalOrders() {
         return totalOrders;
     }
 
-    public void orderServiceSwitch(Scanner scanner, OrderService orderService){
+    public void orderServiceSwitch(Scanner scanner, OrderService orderService) {
         System.out.println("""
-    What would you like to do?
-    1) Take an order
-    2) Find an order
-    3) Change an order
-    4) Exit""");
+                \n----- ORDER MENU -----
+                What would you like to do?
+                1) Take an order
+                2) Find an order
+                3) Change an order
+                4) Exit\n""");
         int option = scanner.nextInt();
         scanner.nextLine();
-        switch (option){
+        switch (option) {
             case 1:
                 orderService.createNewOrder();
                 break;
@@ -127,6 +135,7 @@ public class OrderService {
                 break;
         }
     }
+
     public static void main(String[] args) {
 //        OrderService orderService = new OrderService();
 //        MenuItemService menuItemService = new MenuItemService();

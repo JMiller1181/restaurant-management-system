@@ -186,17 +186,16 @@ public class SalesReport {
                 printOrders(orderList));
     }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        SalesReport report = new SalesReport();
+    public static void handleSalesReportMenu(Scanner scanner, SalesReport report) {
 
         boolean exit = false;
         while (!exit) {
             System.out.println("""
-                    MANAGER, would you like to:\s
+                    ----- SALES REPORT MENU -----
+                    Please select from the following:\s
                     1. Export report to a new file
                     2. Print report to console
-                    3. Exit""");
+                    3. Go back\n""");
             int choice = scanner.nextInt();
             scanner.nextLine();
 

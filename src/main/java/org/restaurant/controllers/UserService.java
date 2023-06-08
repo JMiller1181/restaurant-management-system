@@ -1,11 +1,18 @@
 package org.restaurant.controllers;
 
+import org.restaurant.models.Inventory;
+import org.restaurant.models.Table;
+import org.restaurant.models.User.Role;
+import org.restaurant.utils.PasswordHasher;
+//import org.restaurant.controllers.SalesReport.handleSalesReportMenu;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.restaurant.models.User.Role;
-import org.restaurant.utils.PasswordHasher;
+import static org.restaurant.controllers.SalesReport.handleSalesReportMenu;
+import static org.restaurant.models.Table.createTables;
+import static org.restaurant.models.Table.handleTableMenu;
 
 public class UserService {
     private List<String> employee;
@@ -74,7 +81,11 @@ public class UserService {
     }
 
     //manager switch statment options
-    private static boolean handleManagerMenu(Scanner scanner, UserService userService) {
+    public static boolean handleManagerMenu(Scanner scanner, UserService userService) {
+        Table[] tables = createTables();
+        OrderService orderService = new OrderService();
+        Inventory inventory = new Inventory();
+        SalesReport reports = new SalesReport();
         while (true) {
             System.out.println("""
 
@@ -93,18 +104,22 @@ public class UserService {
             switch (managerChoice) {
                 case 1:
                     //tables options
+                    handleTableMenu(scanner, tables);
                     break;
                 case 2:
                     //order options
+                    orderService.orderServiceSwitch(scanner,orderService);
                     break;
                 case 3:
                     //menu options
                     break;
                 case 4:
-                    //Inventory options
+                    //inventory options
+                    inventory.handleInventoryMenu(); //view inventory not working
                     break;
                 case 5:
                     //sales report options
+                    handleSalesReportMenu(scanner, reports);
                     break;
                 case 6:
                     //switch user and go back to log in
@@ -112,6 +127,7 @@ public class UserService {
                     return false;
                 case 7:
                     //end session
+                    System.out.println("Ending Java Session, good-bye!");
                     return true;
                 default:
                     System.out.println("Invalid choice!");
@@ -121,7 +137,9 @@ public class UserService {
     }
 
     //staff member switch statement options
-    private static boolean handleStaffMenu(Scanner scanner, UserService userService) {
+    public static boolean handleStaffMenu(Scanner scanner, UserService userService) {
+        Table[] tables = createTables();
+        OrderService orderService = new OrderService();
         while (true) {
             System.out.println("""
 
@@ -137,9 +155,11 @@ public class UserService {
             switch (staffChoice) {
                 case 1:
                     //table options
+                    handleTableMenu(scanner, tables);
                     break;
                 case 2:
                     //order options
+                    orderService.orderServiceSwitch(scanner,orderService);
                     break;
                 case 3:
                     //switch user go back to log in
@@ -147,6 +167,7 @@ public class UserService {
                     return false;
                 case 4:
                     //end session
+                    System.out.println("Ending Java Session, good-bye!");
                     return true;
                 default:
                     System.out.println("Invalid choice!");
@@ -156,7 +177,7 @@ public class UserService {
     }
 
     //login screen
-    private static Role loginScreen(UserService userService, Scanner scanner) {
+    public static Role loginScreen(UserService userService, Scanner scanner) {
         System.out.println("\n*** WELCOME, PLEASE SIGN IN ***\n");
 
         boolean loggedIn = false;
@@ -174,36 +195,6 @@ public class UserService {
             }
         }
         return userRole;
-    }
-
-    public static void main(String[] args) {
-        // Create a PasswordHasher object
-        PasswordHasher passwordHasher = new PasswordHasher();
-
-        // Create a Scanner object for input
-        Scanner scanner = new Scanner(System.in);
-
-        // Create a UserService object with the employee and password lists
-        UserService userService = new UserService();
-
-        //login method
-        Role userRole = loginScreen(userService, scanner);
-
-        while (userRole != null) {
-            if (userRole == Role.MANAGER) {
-                boolean exitSession = handleManagerMenu(scanner, userService);
-                if (exitSession) {
-                    break;
-                }
-            } else if (userRole == Role.STAFF) {
-                boolean exitSession = handleStaffMenu(scanner, userService);
-                if (exitSession) {
-                    break;
-                }
-            }
-            userRole = loginScreen(userService, scanner);
-        }
-        System.exit(0);
     }
 
 }

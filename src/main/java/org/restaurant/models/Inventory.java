@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class Inventory {
-    private HashMap<String, Integer> ingredients;
-    private Scanner scanner;
+    private static HashMap<String, Integer> ingredients;
+    private static Scanner scanner;
 
     public Inventory() {
         ingredients = new HashMap<>();
@@ -22,7 +22,7 @@ public class Inventory {
     }
 
     // Get amount of ingredients in inventory
-    public int getInventory(String ingredient) {
+    public static int getInventory(String ingredient) {
         if (ingredients.containsKey(ingredient)) {
             return ingredients.get(ingredient);
         } else {
@@ -31,7 +31,7 @@ public class Inventory {
     }
 
     // Update amount of ingredients in inventory
-    public void updateInventory(String ingredient, int amount) {
+    public static void updateInventory(String ingredient, int amount) {
         if (ingredients.containsKey(ingredient)) {
             ingredients.put(ingredient, amount);
         }
@@ -83,7 +83,7 @@ public class Inventory {
     }
 
     // Print low inventory WARNING
-    private void printWarning(String ingredient, int amount) {
+    private static void printWarning(String ingredient, int amount) {
 
         System.out.println("\u001B[31mWARNING\u001B[0m : Low Inventory for " + ingredient + ". Only " + amount + " left!");
     }
@@ -96,7 +96,7 @@ public class Inventory {
     }
 
     // Show inventory with warnings for low ingredients
-    private void viewInventory() {
+    private static void viewInventory() {
         System.out.println("\nInventory:");
         for (String ingredient : ingredients.keySet()) {
             int amount = getInventory(ingredient);
@@ -108,7 +108,7 @@ public class Inventory {
     }
 
     // Update ingredient amount
-    private void updateIngredient() {
+    public void updateIngredient() {
         System.out.print("Enter ingredient name: ");
         String ingredient = scanner.nextLine();
         System.out.print("Enter new amount: ");
@@ -119,13 +119,13 @@ public class Inventory {
     }
 
     // Main menu
-    private void showMainMenu() {
+    public void handleInventoryMenu() {
         System.out.println("\n----- Welcome to the Inventory Management -----");
         while (true) {
             System.out.println("\n----- Inventory Main Menu -----");
             System.out.println("1. View Inventory");
             System.out.println("2. Update Ingredient Amount");
-            System.out.println("3. Exit");
+            System.out.println("3. Go back");
 
             System.out.print("Enter your choice: ");
             int choice = Integer.parseInt(scanner.nextLine());
@@ -146,39 +146,39 @@ public class Inventory {
         }
     }
 
-    public static void main(String[] args) {
-        // Read inventory from file
-        Inventory inventory = readInventoryFromFile("src/main/java/org/restaurant/utils/inventory.txt");
-
-        // Print current inventory
-        System.out.println("Current inventory:");
-        System.out.println(inventory);
-
-
-        // Check the amount of each ingredient and warn if it is less than 5.
-        for (String ingredient : inventory.ingredients.keySet()) {
-            int amount = inventory.getInventory(ingredient);
-            if (amount <= 3) {
-                // Print a warning message in red.
-                inventory.printWarning(ingredient, amount);
-
-            }
-        }
-
-        // Sample order
-        List<String> orderedIngredients = Arrays.asList("buns", "patties", "chicken", "veggie", "buns", "ketchup", "pickles");
-        inventory.processOrder(orderedIngredients);
-
-        // Print inventory after order
-        System.out.println("\nInventory after order:");
-        System.out.println(inventory);
-
-        // Write inventory to file
-        writeInventoryToFile(inventory, "src/main/java/org/restaurant/utils/inventory.txt");
-
-        // Show main menu
-        inventory.showMainMenu();
-    }
+//    public static void main(String[] args) {
+//        // Read inventory from file
+//        Inventory inventory = readInventoryFromFile("src/main/java/org/restaurant/utils/inventory.txt");
+//
+//        // Print current inventory
+//        System.out.println("Current inventory:");
+//        System.out.println(inventory);
+//
+//
+//        // Check the amount of each ingredient and warn if it is less than 5.
+//        for (String ingredient : inventory.ingredients.keySet()) {
+//            int amount = inventory.getInventory(ingredient);
+//            if (amount <= 3) {
+//                // Print a warning message in red.
+//                inventory.printWarning(ingredient, amount);
+//
+//            }
+//        }
+//
+//        // Sample order
+//        List<String> orderedIngredients = Arrays.asList("buns", "patties", "chicken", "veggie", "buns", "ketchup", "pickles");
+//        inventory.processOrder(orderedIngredients);
+//
+//        // Print inventory after order
+//        System.out.println("\nInventory after order:");
+//        System.out.println(inventory);
+//
+//        // Write inventory to file
+//        writeInventoryToFile(inventory, "src/main/java/org/restaurant/utils/inventory.txt");
+//
+//        // Show main menu
+//        inventory.handleInventoryMenu();
+//    }
 }
 
 

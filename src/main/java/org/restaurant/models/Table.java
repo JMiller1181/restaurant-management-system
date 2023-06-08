@@ -2,6 +2,7 @@ package org.restaurant.models;
 
 
 import java.util.Scanner;
+
 public class Table {
 
     // Table attributes
@@ -102,72 +103,6 @@ public class Table {
                 "\nStatus: " + status.getDisplayValue() + "\n";
     }
 
-
-    // Main method to interact with the tables
-    public static void main(String[] args) {
-// Create tables
-        Table[] tables = createTables();
-
-
-// Create a scanner object to read user input
-        Scanner scanner = new Scanner(System.in);
-
-
-        while (true) {
-// Print menu options
-            System.out.println("----- MENU -----");
-            System.out.println("1. Assign a table");
-            System.out.println("2. Reserve a table");
-            System.out.println("3. Make a table available");
-            System.out.println("4. Print table list");
-            System.out.println("0. Exit");
-
-
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-
-
-            if (choice == 0) {
-                System.out.println("Exiting...");
-                break;
-            }
-
-
-            switch (choice) {
-                case 1://Option "1. Assign a table"
-                    System.out.print("Enter party size: ");
-                    int partySize = scanner.nextInt();
-                    assignTableByPartySize(tables, partySize);
-                    break;
-                case 2://Option "2. Reserve a table"
-                    System.out.print("Enter party size for reservation: ");
-                    int reservationSize = scanner.nextInt();
-                    Table reservedTable = reserveTableByPartySize(tables, reservationSize);
-                    if (reservedTable != null) {
-                        System.out.println("Reserved Table: " + reservedTable.toString());
-                    } else {
-                        System.out.println("No available table for the specified reservation size.");
-                    }
-                    break;
-                case 3: //Option "3. Make a table available"
-                    System.out.print("Enter table ID to make available: ");
-                    int availableTableID = scanner.nextInt();
-                    makeTableAvailable(tables, availableTableID);
-                    break;
-                case 4: //Option "4. Print table list"
-                    printTableListWithColors(tables);
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
-            }
-
-
-            System.out.println();
-        }
-    }
-
-
     // Method to assign a table based on party size
     public static void assignTableByPartySize(Table[] tables, int partySize) {
         Table assignedTable = null;
@@ -242,7 +177,7 @@ public class Table {
 
 
     // Method to create an array of tables
-    private static Table[] createTables() {
+    public static Table[] createTables() {
         Table[] tables = new Table[4];
         tables[0] = new Table(1, 2);
         tables[1] = new Table(2, 4);
@@ -250,6 +185,64 @@ public class Table {
         tables[3] = new Table(4, 6);
         return tables;
     }
+
+
+    // Menu method to interact with the tables
+    public static void handleTableMenu(Scanner scanner, Table[] tables) {
+
+        while (true) {
+// Print menu options
+            System.out.println("----- TABLE MENU -----");
+            System.out.println("1. Assign a table");
+            System.out.println("2. Reserve a table");
+            System.out.println("3. Make a table available");
+            System.out.println("4. Print table list");
+            System.out.println("0. Go back\n");
+
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+
+            if (choice == 0) {
+                System.out.println("Exiting...");
+                break;
+            }
+
+            switch (choice) {
+                case 1://Option "1. Assign a table"
+                    System.out.print("Enter party size: ");
+                    int partySize = scanner.nextInt();
+                    assignTableByPartySize(tables, partySize);
+                    break;
+                case 2://Option "2. Reserve a table"
+                    System.out.print("Enter party size for reservation: ");
+                    int reservationSize = scanner.nextInt();
+                    Table reservedTable = reserveTableByPartySize(tables, reservationSize);
+                    if (reservedTable != null) {
+                        System.out.println("Reserved Table: " + reservedTable.toString());
+                    } else {
+                        System.out.println("No available table for the specified reservation size.");
+                    }
+                    break;
+                case 3: //Option "3. Make a table available"
+                    System.out.print("Enter table ID to make available: ");
+                    int availableTableID = scanner.nextInt();
+                    makeTableAvailable(tables, availableTableID);
+                    break;
+                case 4: //Option "4. Print table list"
+                    printTableListWithColors(tables);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+
+
+            System.out.println();
+        }
+    }
+
 }
 
 
