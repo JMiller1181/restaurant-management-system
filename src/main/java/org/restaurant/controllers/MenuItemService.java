@@ -43,7 +43,6 @@ public class MenuItemService {
     public void addMenuItem(MenuItem item) {
         menuList.add(item);
         item.setItemID(menuList.indexOf(item) + 1);
-        updateMenu(menuList);
     }
 
     public String printMenu() {
@@ -80,7 +79,6 @@ public class MenuItemService {
     public void removeMenuItem(MenuItem item) {
         if (item != null) {
             menuList.remove(item);
-            updateMenu(menuList);
         } else {
             System.out.println("Cannot remove non-existent item from menu.");
         }
@@ -105,7 +103,6 @@ public class MenuItemService {
     }
 
     public List<MenuItem> readMenu() {
-        List<String> menuItems = new ArrayList<>();
         String name = "";
         String desc = "";
         int prep = 0;
@@ -121,27 +118,13 @@ public class MenuItemService {
                         String item = scanner.nextLine();
                         String[] variables = item.split(",");
                         List<String> ingredients = new ArrayList<>();
-                        for (int i = 0; i < variables.length; i++) {
-                            switch (i) {
-                                case 0:
-                                    name = variables[i];
-                                    break;
-                                case 1:
-                                    desc = variables[i];
-                                    break;
-                                case 2:
-                                    prep = Integer.parseInt(variables[i]);
-                                    break;
-                                case 3:
-                                    price = Double.parseDouble(variables[i]);
-                                    break;
-                                case 4:
-                                    itemID = Integer.parseInt(variables[i]);
-                                    break;
-                                default:
-                                    ingredients.add(variables[i]);
-                                    break;
-                            }
+                        name = variables[0];
+                        desc = variables[1];
+                        prep = Integer.parseInt(variables[2]);
+                        price = Double.parseDouble(variables[3]);
+                        itemID = Integer.parseInt(variables[4]);
+                        for (int i = 5; i < variables.length; i++){
+                            ingredients.add(variables[i]);
                         }
                         MenuItem menuItem = new MenuItem(name,desc,prep,price,ingredients);
                         addMenuItem(menuItem);
@@ -166,6 +149,7 @@ public class MenuItemService {
         switch (option){
             case 1:
                 addMenuItem(createNewMenuItem());
+                updateMenu(menuList);
                 break;
             case 2:
                 System.out.println("Which item would you like to remove?");
@@ -173,6 +157,7 @@ public class MenuItemService {
                 int removeID = scanner.nextInt();
                 scanner.nextLine();
                 removeMenuItem(findMenuItem(removeID));
+                updateMenu(menuList);
                 break;
             default:
                 break;
@@ -182,7 +167,7 @@ public class MenuItemService {
         MenuItemService menuItemService = new MenuItemService();
         menuItemService.setMenuList();
 //        menuItemService.updateMenu(menuItemService.getMenuList());
-        System.out.println(menuItemService.printMenu());
+        System.out.println(menuItemService.getMenuList());
 //        Scanner scanner = new Scanner(System.in);
 //        menuItemService.setMenuList();
 //        System.out.println(menuItemService.getMenuList());
