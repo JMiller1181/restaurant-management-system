@@ -1,11 +1,10 @@
-
-veggie:2
-chicken:-1
+veggie:13
+chicken:-12
 mustard:7
-pickles:-1
-buns:-8
+pickles:2
+buns:4
 tomato:5
 lettuce:4
-patties:-3
+patties:5
 cheese:8
-ketchup:3
+ketchup:-8
