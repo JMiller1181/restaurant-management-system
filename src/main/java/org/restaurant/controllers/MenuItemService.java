@@ -145,7 +145,7 @@ public class MenuItemService {
                 What would you like to do?
                 1) Add an item
                 2) Remove an item
-                3) Exit\n""");
+                3) Go back\n""");
         int option = scanner.nextInt();
         scanner.nextLine();
         switch (option){
@@ -165,41 +165,5 @@ public class MenuItemService {
                 break;
         }
     }
-    public static void main(String[] args){
-        MenuItemService menuItemService = new MenuItemService();
-        menuItemService.setMenuList();
-//        menuItemService.updateMenu(menuItemService.getMenuList());
-        menuItemService.addMenuItem(menuItemService.createNewMenuItem());
-        menuItemService.updateMenu(menuItemService.menuList);
-        System.out.println(menuItemService.menuList);
-        System.out.println(menuItemService.findMenuItem(3).getIngredientList());
-//        Scanner scanner = new Scanner(System.in);
-//        menuItemService.setMenuList();
-//        System.out.println(menuItemService.getMenuList());
-//        menuItemService.removeMenuItem(menuItemService.getMenuList().remove(1));
-//        System.out.println(menuItemService.getMenuList());
-//        System.out.println("What is the item name?");
-//        String itemName = scanner.nextLine();
-//        System.out.println("What is the item description?");
-//        String itemDescription = scanner.nextLine();
-//        System.out.println("How long to prep item?");
-//        int itemPrep = scanner.nextInt();
-//        scanner.nextLine();
-//        System.out.println("What is the price?");
-//        double itemPrice = scanner.nextDouble();
-//        scanner.nextLine();
-//        MenuItem item = new MenuItem(itemName, itemDescription, itemPrep, itemPrice);
-//        for(int ing = 0; ing < 4; ing++){
-//            System.out.println("What ingredients make up the item?");
-//            String ingredient = scanner.nextLine();
-//            item.addIngredientToList(ingredient);
-//        }
-//        menuItemService.addMenuItem(item);
-//        menuItemService.updateMenu(menuItemService.getMenuList());
-//        menuItemService.setMenuList();
-//        System.out.println(menuItemService.getMenuList());
-//        System.out.println("What item are you looking for?");
-//        String search = scanner.nextLine();
-//        System.out.println(menuItemService.findMenuItem(search));
-    }
+
 }

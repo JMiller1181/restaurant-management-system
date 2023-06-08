@@ -44,7 +44,7 @@ public class OrderService {
         for (MenuItem item : itemsOrdered) {
             if (item.getItemID() == itemID) {
                 itemsOrdered.remove(item);
-            } else{
+            } else {
                 System.out.println("No such item in order.");
             }
         }
@@ -68,7 +68,7 @@ public class OrderService {
     public void prepareOrder(Order order, Inventory inventory) {
         order.setOrderStatus(Order.OrderStatus.PREPARING);
         List<MenuItem> itemsOrdered = order.getItemsOrderedList();
-        for(MenuItem item: itemsOrdered){
+        for (MenuItem item : itemsOrdered) {
             inventory.processOrder(item.getIngredientList());
         }
         order.setLastHandled();
@@ -88,7 +88,7 @@ public class OrderService {
      * @return the order with the matching ID
      */
     public Order findOrder(int orderID) {
-        if( orderList.get(orderID -1) != null){
+        if (orderList.get(orderID - 1) != null) {
             return orderList.get(orderID - 1);
         } else {
             System.out.println("No order with that ID exists.");
@@ -109,7 +109,7 @@ public class OrderService {
                 foundOrders += order + "\n";
             }
         }
-        if(foundOrders.length() < 1){
+        if (foundOrders.length() < 1) {
             foundOrders = "No orders of that status were found.";
         }
         return foundOrders;
@@ -119,7 +119,7 @@ public class OrderService {
         return totalOrders;
     }
 
-    public void orderServiceSwitch(Scanner scanner, OrderService orderService) {
+    public void orderServiceSwitch(Scanner scanner, Inventory inventory, OrderService orderService, MenuItemService menuItemService) {
         System.out.println("""
                 \n----- ORDER MENU -----
                 What would you like to do?
@@ -131,7 +131,7 @@ public class OrderService {
         scanner.nextLine();
         switch (option) {
             case 1:
-                orderService.takeOrder();
+                orderService.takeOrder(scanner, menuItemService);
                 break;
             case 2:
                 System.out.println("""
@@ -141,7 +141,7 @@ public class OrderService {
                         3) Go back""");
                 int searchType = scanner.nextInt();
                 scanner.nextLine();
-                searchOrderSwitch(searchType);
+                searchOrderSwitch(scanner, searchType);
                 break;
             case 3:
                 System.out.println("What is the order number?");
@@ -154,24 +154,22 @@ public class OrderService {
                         3) Go back""");
                 int changeOrder = scanner.nextInt();
                 scanner.nextLine();
-                editOrderSwitch(selectedOrder,changeOrder);
+                editOrderSwitch(scanner, inventory, menuItemService, selectedOrder, changeOrder);
                 break;
             case 4:
                 break;
         }
     }
 
-    public void takeOrder(){
-        Scanner scanner = new Scanner(System.in);
-        MenuItemService menuItemService = new MenuItemService();
+    public void takeOrder(Scanner scanner, MenuItemService menuItemService) {
         menuItemService.setMenuList();
         Order newOrder = createNewOrder();
-        while (true){
+        while (true) {
             System.out.println("What would you like to order?");
             System.out.println(menuItemService.printMenu());
             int option = scanner.nextInt();
             scanner.nextLine();
-            if (menuItemService.findMenuItem(option) != null){
+            if (menuItemService.findMenuItem(option) != null) {
                 newOrder.addItemsOrdered(menuItemService.findMenuItem(option));
             } else {
                 break;
@@ -181,9 +179,8 @@ public class OrderService {
         System.out.println("Your order is: " + newOrder);
     }
 
-    public void searchOrderSwitch(int option){
-        Scanner scanner = new Scanner(System.in);
-        switch (option){
+    public void searchOrderSwitch(Scanner scanner, int option) {
+        switch (option) {
             case 1:
                 System.out.println("""
                         What is the status of the order?
@@ -193,7 +190,7 @@ public class OrderService {
                         Select any other option to go back""");
                 int selectedStatus = scanner.nextInt();
                 scanner.nextLine();
-                switch (selectedStatus){
+                switch (selectedStatus) {
                     case 1:
                         System.out.println(findOrderByStatus(Order.OrderStatus.WAITING));
                         break;
@@ -218,10 +215,7 @@ public class OrderService {
         }
     }
 
-    public void editOrderSwitch(int order, int option){
-        Inventory inventory = new Inventory();
-        Scanner scanner = new Scanner(System.in);
-        MenuItemService menuItemService = new MenuItemService();
+    public void editOrderSwitch(Scanner scanner, Inventory inventory, MenuItemService menuItemService, int order, int option) {
         menuItemService.setMenuList();
         switch (option) {
             case 1:
@@ -270,11 +264,11 @@ public class OrderService {
                     case 2:
                         while (true) {
                             System.out.println("""
-                            What is the ID of the item you would like to remove?
-                            Press 0 to go back""");
+                                    What is the ID of the item you would like to remove?
+                                    Press 0 to go back""");
                             int removeID = scanner.nextInt();
                             scanner.nextLine();
-                            if(removeID == 0){
+                            if (removeID == 0) {
                                 break;
                             } else {
                                 removeItemFromOrder(findOrder(order), removeID);
@@ -283,7 +277,7 @@ public class OrderService {
                                         "1) Yes\n2) No");
                                 int removeAgain = scanner.nextInt();
                                 scanner.nextLine();
-                                if(removeAgain != 1){
+                                if (removeAgain != 1) {
                                     System.out.println("Your order is: " + findOrder(order));
                                     break;
                                 }
@@ -297,10 +291,6 @@ public class OrderService {
             default:
                 break;
         }
-        }
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        OrderService orderService = new OrderService();
-        orderService.orderServiceSwitch(scanner, orderService);
     }
+
 }
