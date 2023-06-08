@@ -220,7 +220,7 @@ public class Table {
                     int reservationSize = scanner.nextInt();
                     Table reservedTable = reserveTableByPartySize(tables, reservationSize);
                     if (reservedTable != null) {
-                        System.out.println("Reserved Table: " + reservedTable.toString());
+                        System.out.println("Reserved Table: " + reservedTable);
                     } else {
                         System.out.println("No available table for the specified reservation size.");
                     }
