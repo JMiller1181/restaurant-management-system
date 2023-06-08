@@ -4,7 +4,6 @@ import org.restaurant.models.Inventory;
 import org.restaurant.models.Table;
 import org.restaurant.models.User.Role;
 import org.restaurant.utils.PasswordHasher;
-//import org.restaurant.controllers.SalesReport.handleSalesReportMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,12 +58,11 @@ public class UserService {
 
             if (username.equalsIgnoreCase(uname) && PasswordHasher.check(inputPassword, password.get(i))) {    //checking if the uname matches corresponding pw using PasswordHasher.check
                 String colorCode = (role == Role.MANAGER) ? "\u001B[34m" : "\u001B[35m";    //assigning blue to manager and magenta to staff
-                System.out.println("\nLogin Successful! \n" +
+                System.out.println("\n \u001B[32m\tLogin Successful! \u001B[0m \n" +
                         "Welcome " + colorCode + username.toUpperCase() + "\u001B[0m" + ", Role: " + role);
                 return true;    //if username and pw match return true
             }
         }
-//        System.out.println("Invalid username or password! Try again");
         return false;   //else false
     }
 
@@ -123,11 +121,11 @@ public class UserService {
                     break;
                 case 6:
                     //switch user and go back to log in
-                    System.out.println("Logging off...\n");
+                    System.out.println("\u001B[37mLogging off...\u001B[0m\n");
                     return false;
                 case 7:
                     //end session
-                    System.out.println("Ending Java Session, good-bye!");
+                    System.out.println("\u001B[37mEnding Java Session, good-bye!\u001B[0m");
                     return true;
                 default:
                     System.out.println("Invalid choice!");
@@ -163,11 +161,11 @@ public class UserService {
                     break;
                 case 3:
                     //switch user go back to log in
-                    System.out.println("Logging off... ");
+                    System.out.println("\u001B[37mLogging off... \u001B[0m");
                     return false;
                 case 4:
                     //end session
-                    System.out.println("Ending Java Session, good-bye!");
+                    System.out.println("\u001B[37mEnding Java Session, good-bye!\u001B[0m");
                     return true;
                 default:
                     System.out.println("Invalid choice!");
@@ -178,7 +176,7 @@ public class UserService {
 
     //login screen
     public static Role loginScreen(UserService userService, Scanner scanner) {
-        System.out.println("\n*** WELCOME, PLEASE SIGN IN ***\n");
+        System.out.println("\n \u001B[36m \u273E \u273E \u001B[36mWELCOME TO THE BURGER RESTAURANT \u273E \u273E \u001B[0m \n");
 
         boolean loggedIn = false;
         Role userRole = null; // Added variable to store the user role
