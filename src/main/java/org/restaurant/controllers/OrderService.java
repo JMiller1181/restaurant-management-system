@@ -1,5 +1,6 @@
 package org.restaurant.controllers;
 
+import org.restaurant.models.Inventory;
 import org.restaurant.models.MenuItem;
 import org.restaurant.models.Order;
 
@@ -64,8 +65,12 @@ public class OrderService {
      *
      * @param order the order to have its status changed
      */
-    public void prepareOrder(Order order) {
+    public void prepareOrder(Order order, Inventory inventory) {
         order.setOrderStatus(Order.OrderStatus.PREPARING);
+        List<MenuItem> itemsOrdered = order.getItemsOrderedList();
+        for(MenuItem item: itemsOrdered){
+            inventory.processOrder(item.getIngredientList());
+        }
         order.setLastHandled();
     }
 
@@ -214,6 +219,7 @@ public class OrderService {
     }
 
     public void editOrderSwitch(int order, int option){
+        Inventory inventory = new Inventory();
         Scanner scanner = new Scanner(System.in);
         MenuItemService menuItemService = new MenuItemService();
         menuItemService.setMenuList();
@@ -228,7 +234,7 @@ public class OrderService {
                 scanner.nextLine();
                 switch (selectedStatus) {
                     case 1:
-                        prepareOrder(findOrder(order));
+                        prepareOrder(findOrder(order), inventory);
                         break;
                     case 2:
                         completeOrder(findOrder(order));
