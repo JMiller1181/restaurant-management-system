@@ -1,2 +1,9 @@
-item1,the first item,2,2.0,1,buns,patties
-item2,the second item,4,4.0,2,buns,patties,lettuce
+item1,the first item,2,2.0,1,[buns, patties]
+item2,the second item,4,4.0,2,[buns, patties, lettuce]
+item3,the third item,6,6.0,3,[buns, chicken, cheese]
+Burger,A double cheese burger,5,5.99,4,[buns, patties, cheese]
+test,a test item,1,2.0,5,[buns, lettuce, tomato, veggie]
+Chicken sandwich,a chicken sandwich,2,3.0,6,[chicken, cheese, buns]
+test1,testing item,1,1.0,7,[buns, cheese]
+test2,testing the strings,2,2.0,8,[buns, cheese]
+test,testo,3,4.0,9,[buns, chicken]

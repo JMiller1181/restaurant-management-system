@@ -108,6 +108,7 @@ public class MenuItemService {
         int prep = 0;
         double price = 0;
         int itemID = 0;
+        menuList.clear();
 
         try {
             File menuFile = new File("src/main/java/org/restaurant/utils/foodMenu.txt");
@@ -124,7 +125,8 @@ public class MenuItemService {
                         price = Double.parseDouble(variables[3]);
                         itemID = Integer.parseInt(variables[4]);
                         for (int i = 5; i < variables.length; i++){
-                            ingredients.add(variables[i]);
+                            String ingredient = variables[i].replaceAll("[\\[\\]\\s]", "");
+                            ingredients.add(ingredient);
                         }
                         MenuItem menuItem = new MenuItem(name,desc,prep,price,ingredients);
                         addMenuItem(menuItem);
@@ -167,7 +169,10 @@ public class MenuItemService {
         MenuItemService menuItemService = new MenuItemService();
         menuItemService.setMenuList();
 //        menuItemService.updateMenu(menuItemService.getMenuList());
-        System.out.println(menuItemService.getMenuList());
+        menuItemService.addMenuItem(menuItemService.createNewMenuItem());
+        menuItemService.updateMenu(menuItemService.menuList);
+        System.out.println(menuItemService.menuList);
+        System.out.println(menuItemService.findMenuItem(3).getIngredientList());
 //        Scanner scanner = new Scanner(System.in);
 //        menuItemService.setMenuList();
 //        System.out.println(menuItemService.getMenuList());
