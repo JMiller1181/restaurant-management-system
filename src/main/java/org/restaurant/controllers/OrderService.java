@@ -48,6 +48,7 @@ public class OrderService {
                 System.out.println("No such item in order.");
             }
         }
+        order.setTotalPrice();
     }
 
     /**
@@ -88,9 +89,14 @@ public class OrderService {
      * @return the order with the matching ID
      */
     public Order findOrder(int orderID) {
-        if (orderList.get(orderID - 1) != null) {
-            return orderList.get(orderID - 1);
-        } else {
+        try {
+            if (orderList.get(orderID - 1) != null) {
+                return orderList.get(orderID - 1);
+            } else {
+                System.out.println("No order with that ID exists.");
+                return null;
+            }
+        }catch (IndexOutOfBoundsException e){
             System.out.println("No order with that ID exists.");
             return null;
         }
@@ -164,6 +170,9 @@ public class OrderService {
     public void takeOrder(Scanner scanner, MenuItemService menuItemService) {
         menuItemService.setMenuList();
         Order newOrder = createNewOrder();
+        System.out.println("What table is this order for?");
+        newOrder.setOrderTableID(scanner.nextInt());
+        scanner.nextLine();
         while (true) {
             System.out.println("What would you like to order?");
             System.out.println(menuItemService.printMenu());
@@ -253,7 +262,7 @@ public class OrderService {
                             int itemSelection = scanner.nextInt();
                             scanner.nextLine();
                             if (menuItemService.findMenuItem(itemSelection) != null) {
-                                findOrder(order).addItemsOrdered(menuItemService.findMenuItem(option));
+                                findOrder(order).addItemsOrdered(menuItemService.findMenuItem(itemSelection));
                             } else {
                                 break;
                             }

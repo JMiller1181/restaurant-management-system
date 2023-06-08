@@ -1,5 +1,7 @@
 package org.restaurant.models;
 
+import org.restaurant.controllers.MenuItemService;
+
 import java.io.*;
 import java.util.*;
 
@@ -48,7 +50,7 @@ public class Inventory {
     }
 
     // Read Inventory from file
-    private static Inventory readInventoryFromFile(String filename) {
+    public static Inventory readInventoryFromFile(String filename) {
         Inventory inventory = new Inventory();
         File file = new File(filename);
 
@@ -93,6 +95,7 @@ public class Inventory {
         for (String ingredient : orderedIngredients) {
             updateInventory(ingredient, getInventory(ingredient) - 1);
         }
+        writeInventoryToFile(this,"src/main/java/org/restaurant/utils/inventory.txt");
     }
 
     // Show inventory with warnings for low ingredients
@@ -186,7 +189,6 @@ public class Inventory {
 
         }
     }
-
 }
 
 

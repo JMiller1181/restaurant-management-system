@@ -1,0 +1,1 @@
+Veggie Burger,A vegan burger,2,5.99,1,[buns, veggie, lettuce, tomato, pickles, ketchup]

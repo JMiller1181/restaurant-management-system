@@ -82,7 +82,7 @@ public class UserService {
     public static boolean handleManagerMenu(Scanner scanner, UserService userService) {
         Table[] tables = createTables();
         OrderService orderService = new OrderService();
-        Inventory inventory = new Inventory();
+        Inventory inventory = Inventory.readInventoryFromFile("src/main/java/org/restaurant/utils/inventory.txt");
         SalesReport reports = new SalesReport();
         MenuItemService menuItemService = new MenuItemService();
         menuItemService.setMenuList();
@@ -120,7 +120,7 @@ public class UserService {
                     break;
                 case 5:
                     //sales report options
-                    handleSalesReportMenu(scanner, reports);
+                    handleSalesReportMenu(scanner, reports, orderService);
                     break;
                 case 6:
                     //switch user and go back to log in
