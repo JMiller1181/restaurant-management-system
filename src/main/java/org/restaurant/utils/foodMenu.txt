@@ -1,1 +1,2 @@
-name:item1,description:the first item,prepTime:2,price:2.0,itemID:0,ingredients:[buns, patties]
+item1,the first item,2,2.0,2,[buns, patties]
+item2,the second item,4,4.0,4,[buns, patties, lettuce]
