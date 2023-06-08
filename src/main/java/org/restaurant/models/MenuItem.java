@@ -81,6 +81,9 @@ public class MenuItem implements Serializable {
     }
 
     public List<String> getIngredientList() {
+        for(String ingredient: ingredientList){
+            System.out.println(ingredient);
+        }
         return ingredientList;
     }
 
