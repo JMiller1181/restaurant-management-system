@@ -84,6 +84,8 @@ public class UserService {
         OrderService orderService = new OrderService();
         Inventory inventory = new Inventory();
         SalesReport reports = new SalesReport();
+        MenuItemService menuItemService = new MenuItemService();
+        menuItemService.setMenuList();
         while (true) {
             System.out.println("""
 
@@ -106,14 +108,15 @@ public class UserService {
                     break;
                 case 2:
                     //order options
-                    orderService.orderServiceSwitch(scanner,orderService);
+                    orderService.orderServiceSwitch(scanner,inventory, orderService, menuItemService);
                     break;
                 case 3:
                     //menu options
+                    menuItemService.changeMenuSwitch(scanner, menuItemService);
                     break;
                 case 4:
                     //inventory options
-                    inventory.handleInventoryMenu(); //view inventory not working
+                    inventory.handleInventoryMenu();
                     break;
                 case 5:
                     //sales report options
@@ -138,6 +141,9 @@ public class UserService {
     public static boolean handleStaffMenu(Scanner scanner, UserService userService) {
         Table[] tables = createTables();
         OrderService orderService = new OrderService();
+        Inventory inventory = new Inventory();
+        MenuItemService menuItemService = new MenuItemService();
+        menuItemService.setMenuList();
         while (true) {
             System.out.println("""
 
@@ -157,7 +163,7 @@ public class UserService {
                     break;
                 case 2:
                     //order options
-                    orderService.orderServiceSwitch(scanner,orderService);
+                    orderService.orderServiceSwitch(scanner, inventory, orderService, menuItemService);
                     break;
                 case 3:
                     //switch user go back to log in

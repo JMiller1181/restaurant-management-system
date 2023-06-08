@@ -2,7 +2,6 @@ package org.restaurant;
 
 import org.restaurant.controllers.UserService;
 import org.restaurant.models.User;
-import org.restaurant.utils.PasswordHasher;
 
 import java.util.Scanner;
 
@@ -10,8 +9,6 @@ import static org.restaurant.controllers.UserService.*;
 
 public class Main {
     public static void main(String[] args) {
-        // Create a PasswordHasher object
-        PasswordHasher passwordHasher = new PasswordHasher();
 
         // Create a Scanner object for input
         Scanner scanner = new Scanner(System.in);
