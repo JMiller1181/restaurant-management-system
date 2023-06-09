@@ -3,6 +3,9 @@ package org.restaurant.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.restaurant.models.Table.assignTableByPartySize;
 import static org.restaurant.models.Table.reserveTableByPartySize;
@@ -78,6 +81,44 @@ class TableTest {
         assertNotNull(reservedTable, "A table should have been reserved.");
         assertEquals(Table.TableStatus.RESERVED, reservedTable.getStatus(), "The reserved table should have status 'RESERVED'.");
     }
+
+    @Test
+    public void testMakeAvailable() {
+        Table table = new Table(1, 4);
+
+        // Initially, the table is available
+        assertEquals(Table.TableStatus.AVAILABLE, table.getStatus());
+
+        // Making the table available again should not change its status
+        String output1 = getConsoleOutput(table::makeAvailable);
+        assertEquals(Table.TableStatus.AVAILABLE, table.getStatus());
+        assertEquals("Table 1 is already available.", output1);
+
+        // Occupying the table
+        table.assignCustomer();
+        assertEquals(Table.TableStatus.OCCUPIED, table.getStatus());
+
+        // Making the table available should change its status
+        String output2 = getConsoleOutput(table::makeAvailable);
+        assertEquals(Table.TableStatus.AVAILABLE, table.getStatus());
+        assertEquals("Table 1 is now available.", output2);
+    }
+
+    // Helper method to capture console output
+    private String getConsoleOutput(Runnable action) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream originalOut = System.out;
+        System.setOut(printStream);
+
+        // Call the method that prints to the console
+        action.run();
+
+        System.setOut(originalOut);
+        return outputStream.toString().trim();
+    }
+
+
 
 }
 
