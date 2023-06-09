@@ -115,7 +115,6 @@ public class MenuItemService {
             if (menuFile.exists()) {
                     Scanner scanner = new Scanner(menuFile);
                     while (scanner.hasNextLine()) {
-                        System.out.println("Running");
                         String item = scanner.nextLine();
                         String[] variables = item.split(",");
                         List<String> ingredients = new ArrayList<>();

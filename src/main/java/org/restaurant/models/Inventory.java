@@ -1,5 +1,7 @@
 package org.restaurant.models;
 
+import org.restaurant.controllers.MenuItemService;
+
 import java.io.*;
 import java.util.*;
 
@@ -48,7 +50,7 @@ public class Inventory {
     }
 
     // Read Inventory from file
-    private static Inventory readInventoryFromFile(String filename) {
+    public static Inventory readInventoryFromFile(String filename) {
         Inventory inventory = new Inventory();
         File file = new File(filename);
 
@@ -93,6 +95,7 @@ public class Inventory {
         for (String ingredient : orderedIngredients) {
             updateInventory(ingredient, getInventory(ingredient) - 1);
         }
+        writeInventoryToFile(this,"src/main/java/org/restaurant/utils/inventory.txt");
     }
 
     // Show inventory with warnings for low ingredients
@@ -149,13 +152,13 @@ public class Inventory {
                         }
                     }
 
-                    // Sample order
-                    List<String> orderedIngredients = Arrays.asList("buns", "patties", "chicken", "veggie", "buns", "ketchup", "pickles");
-                    inventory.processOrder(orderedIngredients);
-
-                    // Print inventory after order
-                    System.out.println("\nInventory after sample order:");
-                    System.out.println(inventory);
+//                    // Sample order
+//                    List<String> orderedIngredients = Arrays.asList("buns", "patties", "chicken", "veggie", "buns", "ketchup", "pickles");
+//                    inventory.processOrder(orderedIngredients);
+//
+//                    // Print inventory after order
+//                    System.out.println("\nInventory after sample order:");
+//                    System.out.println(inventory);
 
                     // Check the amount of each ingredient and warn if it is less than 3.
                     for (String ingredient : inventory.ingredients.keySet()) {
@@ -186,7 +189,6 @@ public class Inventory {
 
         }
     }
-
 }
 
 

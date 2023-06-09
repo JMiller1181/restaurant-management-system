@@ -186,8 +186,9 @@ public class SalesReport {
                 printOrders(orderList));
     }
 
-    public static void handleSalesReportMenu(Scanner scanner, SalesReport report) {
+    public static void handleSalesReportMenu(Scanner scanner, SalesReport report, OrderService orderService) {
 
+        report.setOrderList(orderService.getOrderList());
         boolean exit = false;
         while (!exit) {
             System.out.println("""
