@@ -152,13 +152,13 @@ public class Inventory {
                         }
                     }
 
-                    // Sample order
-                    List<String> orderedIngredients = Arrays.asList("buns", "patties", "chicken", "veggie", "buns", "ketchup", "pickles");
-                    inventory.processOrder(orderedIngredients);
-
-                    // Print inventory after order
-                    System.out.println("\nInventory after sample order:");
-                    System.out.println(inventory);
+//                    // Sample order
+//                    List<String> orderedIngredients = Arrays.asList("buns", "patties", "chicken", "veggie", "buns", "ketchup", "pickles");
+//                    inventory.processOrder(orderedIngredients);
+//
+//                    // Print inventory after order
+//                    System.out.println("\nInventory after sample order:");
+//                    System.out.println(inventory);
 
                     // Check the amount of each ingredient and warn if it is less than 3.
                     for (String ingredient : inventory.ingredients.keySet()) {
